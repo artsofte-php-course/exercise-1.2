@@ -1,0 +1,74 @@
+<?php
+
+$digits = [
+    "1" => "one",
+    "2" => "two",
+    "3" => "three",
+    "4" => "four",
+    "5" => "five",
+    "6" => "six",
+    "7" => "seven",
+    "8" => "eight",
+    "9" => "nine"];
+
+$teens = [
+    "0" => "ten",
+    "1" => "eleven",
+    "2" => "twelve",
+    "3" => "thirteen",
+    "4" => "fourteen",
+    "5" => "fifteen",
+    "6" => "sixteen",
+    "7" => "seventeen",
+    "8" => "eightteen",
+    "9" => "nineteen"];
+$tys = [
+    "2" => "twenty",
+    "3" => "thirty",
+    "4" => "fourty",
+    "5" => "fifty",
+    "6" => "sixty",
+    "7" => "sevenety",
+    "8" => "eighty",
+    "9" => "ninety"];
+
+$words = [0 => "hundred",
+    2 => "thousand",
+    3 => "million"];
+
+$number = "";
+$numLen = strlen($number);
+$countNumOrders = (int)(($numLen + 2) / 3);
+$numOrders = str_split(substr("00" . $number, -$countNumOrders * 3), 3);
+$outputOrders = [];
+$outputNum = "";
+foreach ($numOrders as $order) {
+    if ($order == "000") {
+        continue;
+    }
+    $tempOrder = "";
+    for ($i = 0; $i < 3; $i++) {
+        if ($order[$i] == "0") {
+            continue;
+        } else {
+            switch ($i) {
+                case 0:
+                    $tempOrder .= $digits[$order[$i]] . " " . $words[0] . " ";
+                    break;
+                case 1:
+                    if ($order[$i] == "1") {
+                        $tempOrder .= $teens[$order[++$i]];
+                    } else {
+                        $tempOrder .= $tys[$order[$i]] . " ";
+                    }
+                    break;
+                case 2:
+                    $tempOrder .= $digits[$order[$i]];
+                    break;
+            }
+        }
+    }
+    $outputNum .= $tempOrder . " " . $words[$countNumOrders--] . " ";
+}
+echo($outputNum);
+?>
