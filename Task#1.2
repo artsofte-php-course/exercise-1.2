@@ -38,30 +38,28 @@ $words = [0 => "hundred",
 
 $number = "";
 $numLen = strlen($number);
-$countNumOrders = (int) (($numLen + 2) / 3);
-$numOrders = str_split(substr("00" . $number, - $countNumOrders*3), 3);
+$countNumOrders = (int)(($numLen + 2) / 3);
+$numOrders = str_split(substr("00" . $number, -$countNumOrders * 3), 3);
 $outputOrders = [];
 $outputNum = "";
 foreach ($numOrders as $order) {
-    if ($order == "000"){
+    if ($order == "000") {
         continue;
     }
     $tempOrder = "";
-    for ($i = 0; $i< 3; $i++) {
-        if ($order[$i]== "0"){
+    for ($i = 0; $i < 3; $i++) {
+        if ($order[$i] == "0") {
             continue;
-        }
-        else{
-            switch($i){
+        } else {
+            switch ($i) {
                 case 0:
                     $tempOrder .= $digits[$order[$i]] . " " . $words[0] . " ";
                     break;
                 case 1:
-                    if ($order[$i] == "1"){
-                        $tempOrder.= $teens[$order[++$i]];
-                    }
-                    else{
-                        $tempOrder.= $tys[$order[$i]] . " ";
+                    if ($order[$i] == "1") {
+                        $tempOrder .= $teens[$order[++$i]];
+                    } else {
+                        $tempOrder .= $tys[$order[$i]] . " ";
                     }
                     break;
                 case 2:
@@ -72,5 +70,5 @@ foreach ($numOrders as $order) {
     }
     $outputNum .= $tempOrder . " " . $words[$countNumOrders--] . " ";
 }
-echo ($outputNum);
+echo($outputNum);
 ?>
