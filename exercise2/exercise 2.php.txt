@@ -1,0 +1,48 @@
+function numberToEnglish($num) {
+  // Массив числовых слов
+  $numbers = array("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine");
+  $tens = array("ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety");
+  $teens = array("eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen");
+  $placeValues = array("", "thousand", "million", "billion", "trillion", "quadrillion");
+
+  // Преобразование числа в строку, чтобы мы могли получить доступ к каждой цифре по отдельности
+  $numStr = (string)$num;
+
+  // Инициализирование результирующей строки
+  $result = "";
+
+  $placeValueIndex = 0;
+
+  // Перебор цифры номера слева направо
+  for ($i = strlen($numStr) - 1; $i >= 0; $i--) {
+    // Извлечение текущей цифры
+    $digit = $numStr[$i];
+
+    // Если текущее значение места является тем, которое занимает
+    if ($placeValueIndex == 0) {
+      // Если текущая цифра отлична от нуля, добавляем соответствующее числовое слово в результирующую строку
+      if ($digit != '0') {
+        $result = $numbers[$digit] . " " . $result;
+      }
+    }
+    // Если текущее значение места равно десятичному месту
+    elseif ($placeValueIndex == 1) {
+      // Если текущая цифра равна 1, добавляем соответствующее слово "teen" в результирующую строку
+      if ($digit == '1') {
+        $result = $teens[$numStr[$i + 1] - 1] . " " . $result;
+        $i--;
+      }
+      // Если текущая цифра отлична от нуля, добавляем соответствующее десятичное слово в результирующую строку
+      elseif ($digit != '0') {
+        $result = $tens[$digit - 1] . " " . $result;
+      }
+    }
+    // Если текущее значение места равно сотням
+    elseif ($placeValueIndex == 2) {
+      // Если текущая цифра отлична от нуля, добавляем соответствующее числовое слово и "hundred" в результирующую строку
+      if ($digit != '0') {
+        $result = $numbers[$digit] . " hundred " . $result;
+      }
+    }
+    // Если текущее значение является значением, превышающим сотни . То есть тысячи, миллионы.
+    else {
