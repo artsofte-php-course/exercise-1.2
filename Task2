@@ -1,0 +1,68 @@
+<?php
+function numberToWords($number) {
+    
+    $words = array(
+        0 => 'ZERO',
+        1 => 'ONE',
+        2 => 'TWO',
+        3 => 'THREE',
+        4 => 'FOUR',
+        5 => 'FIVE',
+        6 => 'SIX',
+        7 => 'SEVEN',
+        8 => 'EIGHT',
+        9 => 'NINE',
+        10 => 'TEN',
+        11 => 'ELEVEN',
+        12 => 'TWELVE',
+        13 => 'THIRTEEN',
+        14 => 'FOURTEEN',
+        15 => 'FIFTEEN',
+        16 => 'SIXTEEN',
+        17 => 'SEVENTEEN',
+        18 => 'EIGHTEEN',
+        19 => 'NINETEEN',
+        20 => 'TWENTY',
+        30 => 'THIRTY',
+        40 => 'FORTY',
+        50 => 'FIFTY',
+        60 => 'SIXTY',
+        70 => 'SEVENTY',
+        80 => 'EIGHTY',
+        90 => 'NINETY',
+    );
+    
+    if (!is_numeric($number)) return "NOT A NUMBER";
+    
+    $num = floor($number);
+    
+    // 0 to 20
+    if ($num < 21) {
+        return $words[$num];
+    }
+    
+    // 21 to 99
+    if ($num < 100) {
+        $tens = floor($num / 10) * 10;
+        $ones = $num % 10;
+        return $words[$tens] . "-" . $words[$ones];
+    }
+    
+    // 100 to 999
+    if ($num < 1000) {
+        $hundreds = floor($num / 100);
+        $remainder = $num % 100;
+        return $words[$hundreds] . " HUNDRED" . ($remainder ? " AND " . numberToWords($remainder) : "");
+    }
+    
+    // 1000 to 999999
+    if ($num < 1000000) {
+        $thousands = floor($num / 1000);
+        $remainder = $num % 1000;
+        return numberToWords($thousands) . " THOUSAND " . ($remainder ? numberToWords($remainder) : "");
+    }
+    
+    return "NUMBER TOO LARGE";
+}
+#Вызываем эту функцию, передав число от 0 до 1 000 000 в качестве аргумента, и она выведет его на английском языке.
+echo numberToWords(123); 
